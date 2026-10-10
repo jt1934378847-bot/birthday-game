@@ -1,0 +1,1313 @@
+/* ============================================================
+ * 生日闯关 · 样式表（v2 · 可爱卡通高级感）
+ * 配色：暖白 + 粉橙 + 淡紫
+ * 设计：圆角 / 柔光 / 漂浮 / Kaiti 装饰字
+ * ============================================================ */
+
+:root {
+  --bg-1: #FFF8F2;
+  --bg-2: #FFEEE2;
+  --bg-3: #FFE0D8;
+  --card: #FFFFFF;
+  --card-soft: #FFFAF6;
+  --shadow: 0 12px 36px rgba(180, 100, 100, 0.12);
+  --shadow-soft: 0 4px 12px rgba(180, 100, 100, 0.08);
+  --primary: #FF8FA3;
+  --primary-light: #FFB6B0;
+  --primary-2: #FFB89B;
+  --accent-purple: #B49DFF;
+  --accent-mint: #A8E6CF;
+  --accent-cream: #FFE89B;
+  --text: #5D4E5A;
+  --text-sub: #A89BA8;
+  --text-light: #D4C8D0;
+  --line: rgba(180, 130, 130, 0.15);
+  --gold: #E8B85F;
+  --gold-dark: #B0863A;
+  --danger: #E89B9B;
+}
+
+/* ---------- 0. Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+               "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue",
+               Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+body {
+  position: relative;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 220, 200, 0.45) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(255, 200, 220, 0.45) 0%, transparent 50%),
+    linear-gradient(180deg, #FFF8F2 0%, #FFEEE2 100%);
+  min-height: 100vh;
+}
+
+/* ---------- 1. 背景装饰层（漂浮的小花星星） ---------- */
+.deco-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.deco-item {
+  position: absolute;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  animation: decoFloat 7s ease-in-out infinite;
+  user-select: none;
+}
+.deco-item:nth-child(2n) { animation-delay: -2s; font-size: 0.9rem; }
+.deco-item:nth-child(3n) { animation-delay: -4s; font-size: 1.3rem; }
+.deco-item:nth-child(4n) { animation-delay: -3s; opacity: 0.3; }
+@keyframes decoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-12px) rotate(8deg); }
+}
+
+/* ---------- 2. App 容器 ---------- */
+.app {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+.page {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 32px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  animation: pageIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- 3. 卡片（白底圆角柔光） ---------- */
+.card {
+  position: relative;
+  background: var(--card);
+  border-radius: 28px;
+  padding: 36px 26px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.8);
+}
+.title {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.subtitle {
+  margin: 0 0 24px;
+  font-size: 0.95rem;
+  color: var(--text-sub);
+  line-height: 1.7;
+}
+
+/* ---------- 4. 按钮 ---------- */
+.btn {
+  display: inline-block;
+  border: 0;
+  border-radius: 999px;
+  padding: 13px 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+  user-select: none;
+  font-family: inherit;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(255, 143, 163, 0.35);
+}
+.btn-primary:hover { box-shadow: 0 10px 24px rgba(255, 143, 163, 0.5); }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-sub);
+  border: 1.5px solid var(--line);
+  box-shadow: none;
+}
+.btn-ghost:hover { background: rgba(0, 0, 0, 0.02); }
+
+.btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text);
+  border: 1.5px solid var(--line);
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+/* ---------- 5. 输入框 ---------- */
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  margin: 16px 0 12px;
+}
+.key-input {
+  width: 100%;
+  max-width: 240px;
+  background: var(--card-soft);
+  border: 2px solid #F4E0D8;
+  border-radius: 18px;
+  padding: 14px 16px;
+  font-size: 1.1rem;
+  letter-spacing: 0.18em;
+  text-align: center;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+.key-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(255, 143, 163, 0.12);
+}
+.key-input::placeholder {
+  color: var(--text-light);
+  letter-spacing: 0.05em;
+}
+
+.hint {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  letter-spacing: 0.05em;
+}
+.error {
+  margin: 10px 0 0;
+  color: var(--danger);
+  font-size: 0.9rem;
+  animation: shake 0.4s ease;
+}
+.egg {
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  color: var(--accent-purple);
+  font-style: italic;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(6px); }
+  60%      { transform: translateX(-4px); }
+  80%      { transform: translateX(4px); }
+}
+.shake { animation: shake 0.4s ease; }
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---------- 6. 恭喜页 · 嘉仪形象解锁 ---------- */
+.celebrate-character {
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFE5DC 0%, #FFEEE2 70%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(255, 180, 160, 0.3);
+  animation: charAppear 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.celebrate-character::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 143, 163, 0.5);
+  animation: rotate 20s linear infinite;
+}
+.celebrate-character::after {
+  content: "";
+  position: absolute;
+  inset: -22px;
+  border-radius: 50%;
+  border: 1.5px dotted rgba(180, 157, 255, 0.4);
+  animation: rotate 30s linear infinite reverse;
+}
+@keyframes charAppear {
+  0%   { opacity: 0; transform: scale(0.3); }
+  60%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes rotate {
+  to { transform: rotate(360deg); }
+}
+.celebrate-character img {
+  width: 165px;
+  height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* ---------- 7. 大地图（v2 · 圆形舞台 · 嘉仪中央） ---------- */
+.page-map {
+  padding-top: 16px;
+  padding-bottom: 24px;
+  justify-content: flex-start;
+}
+.map-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.map-progress {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--text-sub);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-soft);
+}
+.map-stage {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background:
+    radial-gradient(circle at 50% 50%, #FFF1E8 0%, #FFEEE2 55%, #FFE0D8 100%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 6px rgba(255, 255, 255, 0.6),
+    inset 0 0 30px rgba(255, 200, 180, 0.25),
+    0 12px 30px rgba(180, 100, 100, 0.1);
+}
+
+/* 中央人物 */
+.map-character {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+  text-align: center;
+}
+.map-character .halo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 220, 200, 0.5) 0%, transparent 70%);
+  z-index: -1;
+  animation: haloPulse 3s ease-in-out infinite;
+}
+@keyframes haloPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  50%      { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
+}
+.map-character img {
+  width: 150px;
+  height: auto;
+  filter: drop-shadow(0 6px 12px rgba(180, 100, 100, 0.2));
+  animation: charFloat 3.5s ease-in-out infinite;
+}
+@keyframes charFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* 关卡节点 */
+.map-nodes {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+.node {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(180, 130, 130, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: transparent;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.node-locked {
+  opacity: 0;
+  transform: scale(0.3);
+  pointer-events: none;
+}
+.node-done {
+  background: linear-gradient(135deg, #FFE89B 0%, #FFD080 100%);
+  border: 2px solid #FFC870;
+  color: var(--gold-dark);
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 200, 112, 0.4);
+}
+.node-done::after {
+  content: "✓";
+  position: absolute;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--gold-dark);
+}
+.node-done .num { display: none; }
+.node-done:active { transform: scale(0.92); }
+
+.node-current {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  border: 2px solid #FF8FA3;
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow:
+    0 0 0 6px rgba(255, 143, 163, 0.15),
+    0 0 24px rgba(255, 143, 163, 0.45),
+    0 6px 20px rgba(255, 143, 163, 0.45);
+  animation: nodePulse 2.4s ease-in-out infinite;
+  z-index: 6;
+}
+.node-current::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 143, 163, 0.5);
+  animation: ripple 1.8s ease-out infinite;
+}
+.node-current:active { transform: scale(0.92); }
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@keyframes ripple {
+  0%   { transform: scale(0.85); opacity: 0.85; }
+  100% { transform: scale(1.5);  opacity: 0; }
+}
+
+/* 装饰 */
+.map-deco {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.map-deco .deco {
+  position: absolute;
+  font-size: 1rem;
+  opacity: 0.55;
+  animation: decoFloat 6s ease-in-out infinite;
+}
+.map-deco .deco:nth-child(2n) { animation-delay: -2s; font-size: 0.85rem; }
+.map-deco .deco:nth-child(3n) { animation-delay: -4s; font-size: 1.2rem; }
+@keyframes decoFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-8px) rotate(8deg); }
+}
+
+/* 地图底部提示 */
+.map-tip {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  letter-spacing: 0.05em;
+  animation: tipBlink 2.2s ease-in-out infinite;
+}
+@keyframes tipBlink {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
+
+/* 全通关后：返回结局入口 */
+.map-return {
+  display: block;
+  margin: 14px auto 0;
+  font-size: 0.9rem;
+}
+
+/* 全部通关：爱心轨迹揭示 */
+.trail-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.trail-overlay.shown { opacity: 1; }
+.trail-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.trail-path {
+  fill: none;
+  stroke: #FF8FA3;
+  stroke-width: 2.2;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(255, 143, 163, 0.5));
+}
+.trail-overlay.shown .trail-path {
+  animation: drawTrail 3.5s ease-out;
+}
+@keyframes drawTrail {
+  0%   { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+.trail-second {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translate(34px, -8px) scale(0);
+  z-index: 9;
+  opacity: 0;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.6s,
+              opacity 0.6s ease 1.6s;
+}
+.trail-overlay.shown .trail-second {
+  transform: translate(-50%, -50%) translate(34px, -8px) scale(1);
+  opacity: 1;
+}
+.trail-second img {
+  width: 140px;
+  height: auto;
+  filter: drop-shadow(0 4px 10px rgba(180, 100, 100, 0.25));
+  animation: charFloat 3.5s ease-in-out infinite 2.4s;
+}
+
+/* ---------- 8. 关卡通用 ---------- */
+.page-level {
+  padding-top: 72px;
+  justify-content: flex-start;
+}
+.level-shell { width: 100%; margin: 0 auto; }
+.level-intro {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 8px;
+  animation: pageIn 0.5s ease both;
+}
+.level-intro h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.level-intro p {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  color: var(--text-sub);
+  line-height: 1.85;
+  word-break: break-word;
+}
+
+/* ---------- 9. 关卡 1 · 消消乐 ---------- */
+.match3-board {
+  display: grid;
+  gap: 6px;
+  margin: 0 auto;
+  max-width: 360px;
+}
+.match3-cell {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--card);
+  border: 2px solid #F4E0D8;
+  border-radius: 14px;
+  font-size: 0.85rem;
+  color: var(--text);
+  text-align: center;
+  padding: 4px;
+  line-height: 1.2;
+  cursor: pointer;
+  user-select: none;
+  word-break: break-all;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-soft);
+  font-weight: 500;
+}
+.match3-cell:active { transform: scale(0.96); }
+.match3-cell.selected {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  border-color: var(--primary);
+  color: #fff;
+  transform: scale(0.94);
+  box-shadow: 0 0 18px rgba(255, 143, 163, 0.5);
+}
+.match3-cell.clearing {
+  animation: cellPop 0.5s ease forwards;
+}
+@keyframes cellPop {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.2); opacity: 0.6; }
+  100% { transform: scale(0); opacity: 0; }
+}
+.match3-progress {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  color: var(--text-sub);
+}
+.match3-star {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 100;
+  background: rgba(255, 248, 242, 0.4);
+  animation: starReveal 1.2s ease forwards;
+}
+.match3-star .star {
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, #fff 0%, #FFE89B 50%, transparent 80%);
+  border-radius: 50%;
+  box-shadow: 0 0 80px 30px #FFE89B;
+  animation: starExpand 1.4s ease-out forwards;
+}
+@keyframes starExpand {
+  to {
+    width: 200px; height: 200px;
+    box-shadow: 0 0 200px 100px rgba(255, 233, 155, 0.9);
+  }
+}
+
+/* ---------- 10. 选择题 ---------- */
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 20px 0;
+}
+.quiz-option {
+  width: 100%;
+  text-align: left;
+  background: var(--card);
+  border: 2px solid #F4E0D8;
+  color: var(--text);
+  padding: 14px 16px;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-soft);
+  font-family: inherit;
+  font-weight: 500;
+}
+.quiz-option:active { transform: scale(0.98); }
+.quiz-option .opt-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFB89B, #FF8FA3);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-right: 12px;
+  vertical-align: middle;
+}
+.quiz-option.correct {
+  background: linear-gradient(135deg, rgba(168, 214, 168, 0.3), rgba(168, 230, 207, 0.3));
+  border-color: #A8D5A8;
+  color: var(--text);
+}
+.quiz-option.wrong {
+  background: rgba(232, 155, 155, 0.2);
+  border-color: #E89B9B;
+  animation: shake 0.3s ease;
+}
+.quiz-feedback {
+  text-align: center;
+  margin: 14px 0;
+  font-size: 0.9rem;
+  min-height: 24px;
+}
+.quiz-feedback.ok { color: var(--text); font-weight: 600; }
+.quiz-feedback.no { color: var(--danger); }
+
+/* ---------- 11. 主观题 / 输入题 ---------- */
+.input-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+  align-items: center;
+}
+.text-input {
+  width: 100%;
+  max-width: 280px;
+  background: var(--card-soft);
+  border: 2px solid #F4E0D8;
+  border-radius: 16px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  color: var(--text);
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  font-family: inherit;
+}
+.text-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(255, 143, 163, 0.12);
+}
+.hint-btn {
+  background: transparent;
+  border: 0;
+  color: var(--accent-purple);
+  font-size: 0.85rem;
+  text-decoration: underline dotted;
+  text-underline-offset: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 4px 8px;
+}
+.hint-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ---------- 12. 音乐题 · 黄昏 / 星空背景 ---------- */
+.music-stage {
+  position: relative;
+  height: 200px;
+  border-radius: 22px;
+  overflow: hidden;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FFE0E5 0%, #FFB89B 60%, #FFE89B 100%);
+  box-shadow: var(--shadow);
+}
+.music-stage.star {
+  background: linear-gradient(180deg, #E0E5FF 0%, #B49DFF 60%, #FFB6B0 100%);
+}
+.music-stage .starfield {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 20% 30%, #fff 0%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 60% 60%, #fff 0%, transparent 70%),
+    radial-gradient(2px 2px at 80% 40%, #fff 0%, transparent 70%),
+    radial-gradient(1px 1px at 40% 70%, #fff 0%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 25% 50%, #fff 0%, transparent 70%);
+  opacity: 0.7;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+@keyframes twinkle {
+  0%   { opacity: 0.4; }
+  100% { opacity: 0.9; }
+}
+.music-stage .sun {
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFFAE8 0%, #FFE89B 60%, transparent 100%);
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(0.5px);
+}
+
+/* ---------- 13. 翻牌 ---------- */
+.cards-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 16px auto 0;
+  max-width: 360px;
+}
+.flip-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  perspective: 800px;
+  cursor: pointer;
+}
+.flip-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+.flip-card.flipped .flip-inner,
+.flip-card.matched .flip-inner {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 6px;
+  line-height: 1.2;
+  box-shadow: var(--shadow-soft);
+  font-weight: 500;
+}
+.flip-back {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  color: #fff;
+  font-size: 1.5rem;
+}
+.flip-front {
+  background: var(--card);
+  color: var(--text);
+  transform: rotateY(180deg);
+  border: 2px solid #F4E0D8;
+}
+.flip-card.matched .flip-front {
+  background: linear-gradient(135deg, #FFE89B, #FFD080);
+  border-color: #FFC870;
+  color: var(--gold-dark);
+}
+
+/* ---------- 14. 拼图 ---------- */
+.puzzle-board {
+  position: relative;
+  margin: 12px auto 0;
+  width: min(360px, 92vw);
+  aspect-ratio: 1 / 1;
+  background: var(--card-soft);
+  border-radius: 18px;
+  border: 2px solid #F4E0D8;
+  overflow: hidden;
+  display: grid;
+  box-shadow: var(--shadow-soft);
+}
+.puzzle-tile {
+  background-size: 300% 300%;
+  background-repeat: no-repeat;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.puzzle-tile:active { transform: scale(0.96); }
+.puzzle-tile.empty {
+  background: rgba(244, 224, 216, 0.4) !important;
+  cursor: default;
+}
+.puzzle-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  background: rgba(255, 248, 242, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.puzzle-overlay.shown { opacity: 1; }
+.puzzle-overlay .checkmark {
+  font-size: 4rem;
+  filter: drop-shadow(0 0 12px #FFE89B);
+  animation: dropIn 0.6s ease both;
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: scale(0.5); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ---------- 15. 二选一 ---------- */
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+.choice-card {
+  background: var(--card);
+  border: 2px solid #F4E0D8;
+  border-radius: 20px;
+  padding: 24px 14px;
+  text-align: center;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-soft);
+}
+.choice-card:active { transform: scale(0.97); }
+.choice-card .ic {
+  font-size: 2.2rem;
+  margin-bottom: 6px;
+  display: block;
+}
+.choice-card .arrow {
+  font-size: 2rem;
+  color: var(--accent-purple);
+  font-weight: 800;
+  line-height: 1;
+  margin: 4px 0 6px;
+  text-shadow: 0 2px 4px rgba(180, 157, 255, 0.2);
+}
+.choice-card.chosen .arrow {
+  color: #fff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+.choice-card .lb { font-size: 1.05rem; font-weight: 600; }
+.choice-card .sb { font-size: 0.8rem; color: var(--text-sub); margin-top: 4px; }
+.choice-card.chosen {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 143, 163, 0.4);
+}
+.choice-card.chosen .sb { color: rgba(255, 255, 255, 0.85); }
+
+/* ---------- 16. 许愿池（卡牌洗牌 · 眼力追踪） ---------- */
+.wish-status {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-sub);
+  min-height: 24px;
+  margin: 4px 0 10px;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+.wish-track {
+  position: relative;
+  height: 136px;
+  margin: 12px 0 8px;
+  padding: 10px;
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 233, 155, 0.4) 0%, transparent 50%),
+    linear-gradient(180deg, #E5DAFF 0%, #B49DFF 100%);
+  box-shadow: var(--shadow);
+}
+.wish-track::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background-image:
+    radial-gradient(2px 2px at 15% 25%, #fff 0%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 75% 35%, #fff 0%, transparent 70%),
+    radial-gradient(2px 2px at 45% 15%, #fff 0%, transparent 70%),
+    radial-gradient(1.5px 1.5px at 85% 75%, #fff 0%, transparent 70%);
+  opacity: 0.6;
+  pointer-events: none;
+  animation: twinkle 3s ease-in-out infinite alternate;
+}
+.track-card {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  aspect-ratio: 3 / 4;
+  height: 116px;
+  cursor: pointer;
+  transition: transform 0.42s cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 1;
+}
+.track-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease;
+  transform-style: preserve-3d;
+}
+.tf-front,
+.tf-back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 6px;
+  line-height: 1.3;
+  box-shadow: var(--shadow-soft);
+  font-weight: 600;
+  word-break: break-word;
+}
+.tf-front {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FFF3EC 100%);
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  color: var(--text);
+}
+.tf-back {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  color: #fff;
+  font-size: 1.5rem;
+  transform: rotateY(180deg);
+}
+.track-card.down .track-inner { transform: rotateY(180deg); }
+.track-card.mine .tf-front {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 143, 163, 0.35),
+              0 0 16px rgba(255, 143, 163, 0.5);
+}
+.track-card.success .tf-front {
+  background: linear-gradient(135deg, #FFE89B, #FFD080);
+  border-color: #FFC870;
+  color: var(--gold-dark);
+}
+.wish-reply {
+  margin: 16px 0;
+  padding: 16px 18px;
+  background: linear-gradient(135deg, #FFF1E8, #FFE5DC);
+  border-radius: 16px;
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  animation: pageIn 0.5s ease;
+  border-left: 3px solid var(--primary);
+}
+.wish-custom {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
+.wish-custom input { flex: 1; }
+
+/* ---------- 17. 中场过场 ---------- */
+.pass-text {
+  margin: 0 0 14px;
+  font-size: 1rem;
+  color: var(--text);
+  line-height: 1.85;
+  font-weight: 500;
+  text-align: left;
+}
+.pass-text p {
+  margin: 0 0 8px;
+}
+.bridge-text {
+  margin: 0 0 24px;
+  font-size: 0.92rem;
+  color: var(--text-sub);
+  line-height: 1.85;
+  text-align: left;
+}
+.bridge-text p {
+  margin: 0 0 6px;
+}
+
+/* ---------- 18. 结局 · 两人并立 ---------- */
+.page-ending {
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+.ending-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(255, 220, 200, 0.5) 0%, transparent 60%),
+    linear-gradient(180deg, #FFF8F2 0%, #FFE0D8 100%);
+}
+.ending-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 480px;
+  margin: 0 auto;
+  animation: pageIn 1.2s ease both;
+}
+.ending-characters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 28px;
+}
+.ending-characters img {
+  width: 145px;
+  height: auto;
+  filter: drop-shadow(0 8px 16px rgba(180, 100, 100, 0.2));
+  animation: charFloat 3s ease-in-out infinite;
+}
+.ending-characters img:nth-child(2) { animation-delay: 0.4s; }
+.ending-main {
+  margin: 0 0 32px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.75;
+  color: var(--text);
+}
+.ending-petal {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFB6B0 0%, #FF8FA3 100%);
+  pointer-events: none;
+  animation: petalFall 4.5s linear forwards;
+  opacity: 0.7;
+  z-index: 100;
+}
+@keyframes petalFall {
+  0%   { transform: translateY(-20px) rotate(0); opacity: 0; }
+  10%  { opacity: 0.9; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ---------- 19. 生日信弹窗 ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: pageIn 0.4s ease both;
+}
+.modal-mask {
+  position: absolute;
+  inset: 0;
+  background: rgba(180, 130, 130, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  background: linear-gradient(180deg, #FFF8EE 0%, #FFFAF0 100%);
+  color: var(--text);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(180, 100, 100, 0.2);
+  animation: modalIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) both;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.85) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-close {
+  position: absolute;
+  top: 10px; right: 14px;
+  background: transparent;
+  border: 0;
+  font-size: 1.6rem;
+  color: var(--text-sub);
+  z-index: 2;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+font-family: inherit;
+}
+
+.mailbox-head {
+  padding: 20px 26px 4px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--primary);
+  letter-spacing: 6px;
+}
+.mailbox-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 14px 26px 6px;
+}
+.mailbox-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: 1px solid rgba(255, 148, 138, 0.35);
+  background: transparent;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.mailbox-tab.active {
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+.letter-paper .letter-dateline {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+}
+
+.letter-paper {
+  flex: 1;
+  min-height: 0;
+  padding: 24px 26px 24px;
+  overflow-y: auto;
+  font-family: "Kaiti", "STKaiti", "FangSong", "KaiTi", serif;
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--text);
+  -webkit-overflow-scrolling: touch;
+}
+.letter-paper p { margin: 0 0 14px; text-indent: 0; }
+.letter-paper p:empty { margin: 0; height: 8px; }
+.letter-paper .greeting {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+  color: var(--primary);
+}
+.letter-paper .signature {
+  margin-top: 18px;
+  text-align: right;
+  color: var(--text-sub);
+  font-style: italic;
+}
+
+.voice-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #FFE5DC 0%, #FFD8E5 100%);
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  color: var(--text);
+}
+.voice-bar:active { transform: scale(0.99); }
+.voice-bar .vbtn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFB89B 0%, #FF8FA3 100%);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.voice-bar .vtext { flex: 1; font-size: 0.95rem; }
+.voice-bar.playing .vbtn {
+  background: linear-gradient(135deg, #B49DFF, #A8E6CF);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.voice-bar .vwave {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 18px;
+}
+.voice-bar .vwave i {
+  display: block;
+  width: 3px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+.voice-bar.playing .vwave i { animation: wave 0.9s ease-in-out infinite; }
+.voice-bar.playing .vwave i:nth-child(2) { animation-delay: 0.15s; }
+.voice-bar.playing .vwave i:nth-child(3) { animation-delay: 0.3s; }
+.voice-bar.playing .vwave i:nth-child(4) { animation-delay: 0.45s; }
+.voice-bar.playing .vwave i:nth-child(5) { animation-delay: 0.6s; }
+@keyframes wave {
+  0%, 100% { height: 4px; }
+  50%      { height: 18px; }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.05); }
+}
+
+/* ---------- 20. 响应式 ---------- */
+@media (min-width: 480px) {
+  .page { padding: 40px 24px; }
+  .title { font-size: 1.7rem; }
+}
+@media (max-width: 360px) {
+  .match3-cell { font-size: 0.75rem; }
+  .ending-characters img { width: 92px; }
+}

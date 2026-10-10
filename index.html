@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#FFF8F2" />
+  <title>生日副本 · 致我小小的朋友</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- 背景装饰：漂浮小花 / 星星 -->
+  <div class="deco-layer" id="decoLayer"></div>
+
+  <!-- 应用根节点 -->
+  <main id="app" class="app"></main>
+
+  <!-- ===========================================================
+       模板：所有页面/弹窗都在这里定义，JS 通过 cloneNode 渲染
+       人物图约定：
+         me.png      → 嘉仪（寿星 · 熊耳朵）
+         friend.png  → 我（制作者 · 狗耳朵）
+       =========================================================== -->
+  <template id="tpl-start">
+    <section class="page page-start">
+      <div class="card">
+        <h1 class="title" data-bind="start.title"></h1>
+        <div class="keypad">
+          <input
+            type="text"
+            inputmode="numeric"
+            maxlength="8"
+            class="key-input"
+            placeholder="8 位数字"
+            autocomplete="off"
+          />
+          <button class="btn btn-primary" data-action="submit-password">确认</button>
+        </div>
+        <p class="hint" data-bind="start.hint"></p>
+        <p class="error" data-role="error" hidden></p>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-congrats">
+    <section class="page page-congrats">
+      <div class="card">
+        <!-- 解锁的嘉仪卡通形象 -->
+        <div class="celebrate-character">
+          <img src="assets/images/me.png" alt="嘉仪" />
+        </div>
+        <h1 class="title" data-bind="congrats.main"></h1>
+        <p class="subtitle" data-bind="congrats.sub"></p>
+        <div class="actions">
+          <button class="btn btn-primary" data-action="enter">进入</button>
+          <button class="btn btn-ghost" data-action="wait">等一下</button>
+        </div>
+        <p class="egg" data-role="egg" hidden></p>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-welcome">
+    <section class="page page-welcome">
+      <div class="card">
+        <h1 class="title" data-bind="welcome.main"></h1>
+        <p class="subtitle" data-bind="welcome.sub"></p>
+        <div class="actions">
+          <button class="btn btn-primary" data-action="to-map">开始闯关</button>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-map">
+    <section class="page page-map">
+      <div class="map-header">
+        <span class="map-progress" data-role="progress"></span>
+      </div>
+      <div class="map-stage">
+        <!-- 中央：嘉仪卡通形象（始终可见） -->
+        <div class="map-character">
+          <div class="halo"></div>
+          <img src="assets/images/me.png" alt="嘉仪" />
+        </div>
+        <!-- 装饰元素 -->
+        <div class="map-deco" data-role="deco"></div>
+        <!-- 12 节点（JS 动态渲染） -->
+        <div class="map-nodes" data-role="nodes"></div>
+        <!-- 全通关后揭示：爱心轨迹 + 我（dog ears）站在嘉仪身边 -->
+        <div class="trail-overlay" data-role="trail" hidden>
+          <svg class="trail-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+            <path class="trail-path" d="" fill="none" />
+          </svg>
+          <div class="trail-second">
+            <img src="assets/images/friend.png" alt="我" />
+          </div>
+        </div>
+      </div>
+      <div class="map-tip" data-role="tip">↑ 轻触发光的小圆开始第一步</div>
+      <!-- 全通关后：回到结局页（由 JS 在 allDone 时显示） -->
+      <button class="btn btn-ghost map-return" data-action="to-ending" hidden>返回</button>
+    </section>
+  </template>
+
+  <template id="tpl-level">
+    <section class="page page-level">
+      <button class="btn-back" data-action="back-to-map" aria-label="返回大地图">‹</button>
+      <div class="level-shell" data-role="level-shell">
+        <!-- 关卡内容由 JS 注入 -->
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-interlude">
+    <section class="page page-interlude">
+      <div class="card">
+        <div class="pass-text" data-role="pass-text"></div>
+        <div class="bridge-text" data-role="bridge-text"></div>
+        <div class="actions">
+          <button class="btn btn-primary" data-action="next">继续</button>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-ending">
+    <section class="page page-ending">
+      <div class="ending-bg"></div>
+      <div class="ending-content">
+        <div class="ending-characters">
+          <img class="char-birthday" src="assets/images/me.png" alt="嘉仪" />
+          <img class="char-maker" src="assets/images/friend.png" alt="我" />
+        </div>
+        <h1 class="ending-main" data-bind="ending.main"></h1>
+        <div class="actions">
+          <button class="btn btn-primary" data-action="open-letter" data-bind="ending.buttonLetter"></button>
+          <button class="btn btn-ghost" data-action="replay-trail" data-bind="ending.buttonReplay"></button>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-letter">
+    <div class="modal modal-letter" data-role="modal">
+      <div class="modal-mask" data-action="close-letter"></div>
+      <div class="modal-card letter-card">
+        <button class="modal-close" data-action="close-letter" aria-label="关闭">×</button>
+        <div class="mailbox-head">✦ 电子信箱 ✦</div>
+        <div class="mailbox-tabs" data-role="tabs"></div>
+        <div class="letter-paper" data-role="letter-body">
+          <!-- 信纸内容 + 录音由 JS 注入 -->
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- ===========================================================
+       脚本
+       =========================================================== -->
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
